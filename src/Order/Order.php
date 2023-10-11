@@ -61,13 +61,20 @@ class Order extends Base
      * @return mixed
      * @throws \Exception
      */
-    public function getOrderById($orderId = null)
+    public function getOrderById($orderId = null, $site_id = 2000)
     {
         if (empty($orderId)) {
             throw new \Exception('Order ID required');
         }
         $this->client->setUri($this->domain . $this->version . self::ORDERS . '/' . $orderId);
         $this->client->setMethod(Request::METHOD_GET);
+
+        $params = [
+            'site_id' => $site_id,
+        ];
+
+        $this->client->setParameterGet($params);
+        
         return $this->client;
     }
 
